@@ -10,5 +10,6 @@ int main(int argc, char const *argv[]) {
 
     read_from(name, &head);
 
+    free_mem(head);
     return 0;
 }
