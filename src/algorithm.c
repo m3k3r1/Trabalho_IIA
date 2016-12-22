@@ -12,7 +12,6 @@ float get_dist(int a, int b, dist_t *head){
     }
     return quality;
 }
-
 float f_diversity(int n_subjects, int *test_objects, dist_t *head){
     float total = 0;
 
@@ -26,4 +25,22 @@ float f_diversity(int n_subjects, int *test_objects, dist_t *head){
     }
 
     return  total * 1/n_subjects;
+}
+void crt_neighbour(){
+
+}
+int hill_climbing(){
+    int cost;
+//_________________________________
+    //CREATE A NEIGHBOUR
+
+    //CHECK THE NEIGHBOUR COST
+
+    //______________________________
+        //ACCEPTS THE SMALLEST COST
+
+    //_____________________________
+//___________________________________
+
+    return cost;
 }

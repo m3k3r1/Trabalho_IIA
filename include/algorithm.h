@@ -1,9 +1,6 @@
 #ifndef _ALGORITHM_H_
 #define _ALGORITHM_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include "base.h"
 
 float get_dist(int a, int b, dist_t *head);
