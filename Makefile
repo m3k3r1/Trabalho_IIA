@@ -6,10 +6,10 @@ CFLAGS=-I$(IDIR) -Wall -g
 ODIR=obj
 SRC=src
 
-_DEPS =  file_mgmt.h
+_DEPS =  file_mgmt.h algorithm.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ =  main.o file_mgmt.o
+_OBJ =  main.o file_mgmt.o algorithm.o
 OBJ= $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(SRC)/%.c $(DEPS)

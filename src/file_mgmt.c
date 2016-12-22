@@ -25,7 +25,6 @@ void read_from(char* name, dist_t** head){
     }
     fclose(f);
 }
-
 void free_mem(dist_t* head) {
     dist_t* tmp = NULL;
 
