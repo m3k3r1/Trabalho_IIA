@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#include <time.h>
+#include <string.h>
 
 typedef struct dist dist_t;
 struct dist{
@@ -13,5 +15,8 @@ struct dist{
     float dist;
     dist_t* next;
 };
+
+int rand_in_n(dist_t* head);
+void init_sol(int** sol, dist_t* head);
 
 #endif //!_BASE_H_

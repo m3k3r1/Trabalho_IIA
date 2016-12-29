@@ -1,30 +1,45 @@
-#include <stdio.h>
+#include "base.h"
 #include "file_mgmt.h"
 #include "algorithm.h"
 
+#define  DEFAULT_RUNS 10
+
 int main(int argc, char const *argv[]) {
     char name[20];
-    int *sol, *best_sol;
-    int cost, best_cost
+    int *sol;
+    int runs;
+    float cost;
     dist_t* head = NULL;
 
+    srand(time(0));
+
+    if (argc == 3) {
+        runs = atoi(argv[2]);
+        strcpy(name, argv[1]);
+    } else if ( argc == 2) {
+        runs = DEFAULT_RUNS;
+        strcpy(name, argv[1]);
+    } else if (argc == 1) {
+        printf("Name > " );
+        scanf("%s", name );
+    }
+
     //PUTS THE FILE INFO IN THE LINKED LIST
-    printf("Name > " );
-    scanf("%s", name );
     read_from(name, &head);
 
-    // _____________________________________
-    //CREATE INITIAL SOLUTION
+    for (size_t i = 0; i < 1; i++) {
 
-    //RUN THE HILL CLIMBING METHOD
+        //CREATES INTIAL SOLUTION RANDOMLY
+        init_sol(&sol, head);
 
-    //WRITE RESULTS
-    //______________________________________
+        //RUNS THE HILL CLIMBING METHOD
+        cost = hill_climbing(head, &sol);
+        printf("COST -> %.3f\n", cost );
 
-    //WRITE BEST END RESULTS
+    }
 
-
-    //FREES THE MEMORY ALLOCATED FOR THE LINKED LIST
+    //FREES  ALLOCATED MEMORY
     free_mem(head);
+    free(sol);
     return 0;
 }
