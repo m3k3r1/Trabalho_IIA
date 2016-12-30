@@ -40,7 +40,6 @@ float hill_climbing(dist_t* head, sol_t ** sol){
     int n_iter;
 
     n_iter = get_max(head);
-    printf("%d\n", n_iter);
 
     tmp = *sol;
 
@@ -79,11 +78,12 @@ float hill_climbing(dist_t* head, sol_t ** sol){
         }
         else{
             delete_last(&new_sol);
+            *sol = new_sol;
         }
 
     }
     //FREES ALLOCATED MEMORY
-    free_mem_sol(new_sol);
+    //free_mem_sol(new_sol);
     free_mem_sol(tmp);
 
     return cost;

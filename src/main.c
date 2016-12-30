@@ -7,8 +7,9 @@
 int main(int argc, char const *argv[]) {
     char name[20];
     int runs;
-    float cost, best_cost = 0;;
+    float cost, best_cost = 0;
     sol_t* sol = NULL;
+    sol_t* tmp;
     dist_t* head = NULL;
 
     srand(time(0));
@@ -38,11 +39,20 @@ int main(int argc, char const *argv[]) {
         cost = hill_climbing(head, &sol);
         printf("QUALITY -> %.3f\n\n", cost );
 
+
+
         if (best_cost < cost)
             best_cost = cost;
     }
 
     printf("[BEST] %.3f\n", best_cost );
+    printf("[BEST SOL] -> ");
+    tmp = sol;
+    while (tmp) {
+        printf(" %d ", tmp->e );
+        tmp = tmp->next_elem;
+    }
+    printf("\n");
 
     //FREES  ALLOCATED MEMORY
     free_mem(head);
