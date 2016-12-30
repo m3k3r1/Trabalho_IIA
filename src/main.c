@@ -39,8 +39,6 @@ int main(int argc, char const *argv[]) {
         cost = hill_climbing(head, &sol);
         printf("QUALITY -> %.3f\n\n", cost );
 
-
-
         if (best_cost < cost)
             best_cost = cost;
     }
