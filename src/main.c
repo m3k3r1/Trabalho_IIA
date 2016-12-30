@@ -2,7 +2,7 @@
 #include "file_mgmt.h"
 #include "algorithm.h"
 
-#define  DEFAULT_RUNS 10
+#define  DEFAULT_RUNS 100
 
 int main(int argc, char const *argv[]) {
     char name[20];
@@ -20,8 +20,10 @@ int main(int argc, char const *argv[]) {
         runs = DEFAULT_RUNS;
         strcpy(name, argv[1]);
     } else if (argc == 1) {
+        runs = DEFAULT_RUNS;
         printf("Name > " );
-        scanf("%s", name );
+        fgets(name, sizeof(name), stdin);
+        strtok (name, "\n");
     }
 
     //PUTS THE FILE INFO IN THE LINKED LIST
@@ -36,10 +38,8 @@ int main(int argc, char const *argv[]) {
         cost = hill_climbing(head, &sol);
         printf("COST -> %.3f\n\n", cost );
 
-        if (best_cost < cost) {
+        if (best_cost < cost)
             best_cost = cost;
-        }
-
     }
 
     printf("[BEST] %.3f\n", best_cost );

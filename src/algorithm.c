@@ -50,7 +50,7 @@ float hill_climbing(dist_t* head, sol_t ** sol){
     cost = f_diversity(*sol, head);
     printf(" [COST] -> %.3f\n", cost );
 
-    for (size_t i = 0; i < 19; i++) {
+    for (size_t i = 0; i < 20; i++) {
 
         //CREATES NEIGHBOUR
         crt_neighbour(head, &new_sol, *sol);
@@ -65,7 +65,7 @@ float hill_climbing(dist_t* head, sol_t ** sol){
         //CHECKS COST OF NEW NEIGHBOUR
         new_cost = f_diversity(*sol, head);
 
-        printf(" [ COST] -> %.3f\n", new_cost );
+        printf(" [COST] -> %.3f\n", new_cost );
 
         //COST = QUALITY
         //+QUALITY = BETTER SOLUTION
@@ -77,14 +77,13 @@ float hill_climbing(dist_t* head, sol_t ** sol){
             delete_last(&new_sol);
         }
 
-}
+    }
     //FREES ALLOCATED MEMORY
     free_mem_sol(new_sol);
     free_mem_sol(tmp);
 
     return cost;
 }
-
 void free_mem_sol(sol_t* head) {
     sol_t* tmp = NULL;
 
