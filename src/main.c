@@ -11,6 +11,8 @@ int main(int argc, char const *argv[]) {
     sol_t* sol = NULL;
     sol_t* tmp;
     dist_t* head = NULL;
+    time_t start, end, duration;
+    start = time (0);
 
     srand(time(0));
 
@@ -45,15 +47,21 @@ int main(int argc, char const *argv[]) {
     }
 
     printf("==============================================================================================\n" );
-    printf(" [BEST] %.3f\n", best_cost );
-    printf(" [AVERAGE] %.3f\n",avg/runs);
-    printf(" [BEST SOL] -> ");
+    printf(" [BEST] >> %.3f\n", best_cost );
+    printf(" [AVERAGE] >> %.3f\n",avg/runs);
+    printf(" [BEST SOL] >> ");
     tmp = sol;
     while (tmp) {
         printf(" %d ", tmp->e );
         tmp = tmp->next_elem;
     }
-    printf("\n==============================================================================================\n" );
+    //end = clock();
+    //seconds = end - start;
+    //seconds /= CLOCKS_PER_SEC;
+    end = time (0);
+    duration = end - start;
+    printf("\n [ELAPSED TIME]  >> %lus\n", duration );
+    printf("==============================================================================================\n" );
 
     //FREES  ALLOCATED MEMORY
     free_mem_sol(sol);
