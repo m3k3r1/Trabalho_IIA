@@ -2,7 +2,7 @@
 #include "file_mgmt.h"
 #include "algorithm.h"
 
-#define  DEFAULT_RUNS 50
+#define  DEFAULT_RUNS 10
 
 int main(int argc, char const *argv[]) {
     char name[20];

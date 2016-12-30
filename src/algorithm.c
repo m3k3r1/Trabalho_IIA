@@ -58,25 +58,23 @@ float hill_climbing(dist_t* head, sol_t ** sol){
         //CREATES NEIGHBOUR
         crt_neighbour(head, &new_sol, *sol);
 
-        tmp = new_sol;
-        printf("[NEW SOL] -> ");
-        while (tmp) {
-            printf(" %d ", tmp->e );
-            tmp = tmp->next_elem;
-        }
-
         //CHECKS COST OF NEW NEIGHBOUR
         new_cost = f_diversity(*sol, head);
-
-        printf(" [QUALITY] -> %.3f\n", new_cost );
 
         //COST = QUALITY
         //+QUALITY = BETTER SOLUTION
         if (new_cost > cost) {
             *sol = new_sol;
             cost = new_cost;
-        }
-        else{
+
+            tmp = new_sol;
+            printf("[NEW SOL] -> ");
+            while (tmp) {
+                printf(" %d ", tmp->e );
+                tmp = tmp->next_elem;
+            }
+            printf(" [QUALITY] -> %.3f\n", new_cost );
+        }else{
             delete_last(&new_sol);
         }
     }
