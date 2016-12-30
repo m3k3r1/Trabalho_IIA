@@ -7,7 +7,7 @@
 int main(int argc, char const *argv[]) {
     char name[20];
     int runs;
-    float cost;
+    float cost, best_cost = 0;;
     sol_t* sol = NULL;
     dist_t* head = NULL;
 
@@ -27,17 +27,22 @@ int main(int argc, char const *argv[]) {
     //PUTS THE FILE INFO IN THE LINKED LIST
     read_from(name, &head);
 
-    for (size_t i = 0; i < 1; i++) {
+    for (size_t i = 0; i < runs; i++) {
 
         //CREATES INTIAL SOLUTION RANDOMLY
         init_sol(&sol, head);
 
         //RUNS THE HILL CLIMBING METHOD
         cost = hill_climbing(head, &sol);
-        printf("COST -> %.3f\n", cost );
+        printf("COST -> %.3f\n\n", cost );
+
+        if (best_cost < cost) {
+            best_cost = cost;
+        }
 
     }
 
+    printf("[BEST] %.3f\n", best_cost );
     //FREES  ALLOCATED MEMORY
     free_mem(head);
     return 0;

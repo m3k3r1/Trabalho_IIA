@@ -2,20 +2,33 @@
 
 int rand_in_n(dist_t* head, sol_t * sol){
     int/* max,*/ tmp, allow = 0;
-    //sol_t* aux = sol;
+    sol_t* aux = sol;
 
     //FIND MAX WITH head !!!!!!!!!!!!!!!
-
 
     do {
 
         //FIX THE  20 !!!!!!!!!!!!!!!!!!!
         tmp =  1 + rand() % 20;
 
-        if (tmp == 0)
-            allow = 0;
-        else
-            allow = 1;
+            if ( aux == NULL) {
+                if (tmp == 0)
+                    allow = 0;
+                else
+                    allow = 1;
+
+            }else{
+                while (aux) {
+                        if (aux->e == tmp || tmp == 0) {
+                            allow = 0;
+                            break;
+                        }
+                        else
+                            allow = 1;
+                        aux =  aux->next_elem;
+                }
+                aux = sol;
+            }
 
     } while(!allow);
 
@@ -29,9 +42,11 @@ void init_sol(sol_t** sol, dist_t* head){
 }
 
 void crt_node(sol_t ** sol, dist_t* head){
+    sol_t *tmp = *sol;
+
     while ( *sol )
         sol = &(*sol)->next_elem;
-    *sol= add_rand_elem(head, *sol);
+    *sol= add_rand_elem(head, tmp);
 }
 
 sol_t * add_rand_elem(dist_t* head, sol_t * sol){
