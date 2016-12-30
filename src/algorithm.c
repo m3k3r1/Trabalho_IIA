@@ -12,61 +12,91 @@ float get_dist(int a, int b, dist_t *head){
     }
     return dist;
 }
-float f_diversity(int n_objects, int *test_objects, dist_t *head){
+float f_diversity(sol_t* sol, dist_t *head){
     float total = 0;
+    int n_elem = 0;
+    sol_t *tmp;
 
-    for (size_t i = 0; i < n_objects - 1; i++) {
-        for (size_t o = 1; o < n_objects ; o++) {
-            if (i == o || o < i)
-                continue;
-            total += get_dist(test_objects[i],  test_objects[o], head);
+    while (sol != NULL) {
+        tmp = sol->next_elem;
+        while (tmp) {
+            total += get_dist(sol->e,tmp->e, head);
+            tmp = tmp->next_elem;
         }
+        sol = sol->next_elem;
+        n_elem++;
     }
 
-    return  total * 1/n_objects;
+    free_mem_sol(tmp);
+    return  total * 1/n_elem;
 }
-void crt_neighbour(dist_t* head, int** new_sol, int *sol){
-    int *tmp;
-
-    if ( ! (tmp = malloc( sizeof(*sol) + sizeof(int) )) ) {
-        perror("[MEMORY_ERROR]Can't alocate new node");
-        return;
-    }
-
-
-    tmp = sol;
-    tmp[2] = rand_in_n(head);
-
-    *new_sol = tmp;
+void crt_neighbour(dist_t* head, sol_t** new_sol, sol_t* sol){
+    *new_sol = sol;
+    crt_node(new_sol, head);
 }
-float hill_climbing(dist_t* head, int ** sol){
+float hill_climbing(dist_t* head, sol_t ** sol){
     float cost, new_cost;
-    int *new_sol;
+    sol_t *new_sol, *tmp;
+
+    tmp = *sol;
+
+    printf("[INI SOL] -> ");
+    while (tmp) {
+        printf(" %d ", tmp->e );
+        tmp = tmp->next_elem;
+    }
 
     //CHECKS COST OF INITIAL SOLUTION
-    cost = f_diversity(2, *sol, head);
+    cost = f_diversity(*sol, head);
+    printf(" [COST] -> %.3f\n", cost );
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //SOL[1] MUDA AO ENTRAR  SÒ PRINTF WTF
-    printf("[INIT SOL] (%d-%d) -> %.3f\n",*sol[0], *sol[1], cost );
-    //MUDA PARA O VALOR CERTO DEPOIS WTF !!!!!!!!!!
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    for (size_t i = 0; i < 19; i++) {
 
-    //CREATES NEIGHBOUR
-    crt_neighbour(head, &new_sol, *sol);
+        //CREATES NEIGHBOUR
+        crt_neighbour(head, &new_sol, *sol);
 
-    //CHECKS COST OF NEW NEIGHBOUR
-    new_cost = f_diversity(3, new_sol, head);
-    printf("[NEW SOL] (%d-%d-%d) -> %.3f\n",new_sol[0], new_sol[1], new_sol[2], new_cost );
+        tmp = new_sol;
+        printf("[NEW SOL] -> ");
+        while (tmp) {
+            printf(" %d ", tmp->e );
+            tmp = tmp->next_elem;
+        }
 
-    //COST = QUALITY
-    //+QUALITY = BETTER SOLUTION
-    if (new_cost > cost) {
-        *sol = new_sol;
-        cost = new_cost;
-    }
+        //CHECKS COST OF NEW NEIGHBOUR
+        new_cost = f_diversity(*sol, head);
 
+        printf(" [ COST] -> %.3f\n", new_cost );
+
+        //COST = QUALITY
+        //+QUALITY = BETTER SOLUTION
+        if (new_cost > cost) {
+            *sol = new_sol;
+            cost = new_cost;
+        }
+        else{
+            delete_last(&new_sol);
+        }
+
+}
     //FREES ALLOCATED MEMORY
-    free(new_sol);
+    free_mem_sol(new_sol);
+    free_mem_sol(tmp);
+
     return cost;
+}
+
+void free_mem_sol(sol_t* head) {
+    sol_t* tmp = NULL;
+
+    while (head != NULL) {
+        tmp = head->next_elem;
+        free(head);
+        head = tmp;
+    }
+}
+void delete_last(sol_t** head){
+    while (*head && (*head)->next_elem)
+        head = &(*head)->next_elem;
+    free(*head);
+    *head = NULL;
 }

@@ -6,9 +6,9 @@
 
 int main(int argc, char const *argv[]) {
     char name[20];
-    int *sol;
     int runs;
     float cost;
+    sol_t* sol = NULL;
     dist_t* head = NULL;
 
     srand(time(0));
@@ -40,6 +40,5 @@ int main(int argc, char const *argv[]) {
 
     //FREES  ALLOCATED MEMORY
     free_mem(head);
-    free(sol);
     return 0;
 }
