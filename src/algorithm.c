@@ -78,9 +78,7 @@ float hill_climbing(dist_t* head, sol_t ** sol){
         }
         else{
             delete_last(&new_sol);
-            *sol = new_sol;
         }
-
     }
 
     //FREES ALLOCATED MEMORY
