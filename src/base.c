@@ -1,15 +1,32 @@
 #include "base.h"
 
+int get_max(dist_t* head){
+    int max;
+
+    while (head) {
+        if (head->e2 > max) {
+            max = head->e2;
+        }
+        head = head->next;
+    }
+
+    return max;
+}
+
+
 int rand_in_n(dist_t* head, sol_t * sol){
-    int/* max,*/ tmp, allow = 0;
+    int max= 0, tmp, allow = 0;
     sol_t* aux = sol;
 
-    //FIND MAX WITH head !!!!!!!!!!!!!!!
+    while (head) {
+        if (head->e2 > max) {
+            max = head->e2;
+        }
+        head = head->next;
+    }
 
     do {
-
-        //FIX THE  20 !!!!!!!!!!!!!!!!!!!
-        tmp =  1 + rand() % 20;
+        tmp =  1 + rand() % max;
 
             if ( aux == NULL) {
                 if (tmp == 0)

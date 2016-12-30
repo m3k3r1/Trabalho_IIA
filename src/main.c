@@ -2,7 +2,7 @@
 #include "file_mgmt.h"
 #include "algorithm.h"
 
-#define  DEFAULT_RUNS 100
+#define  DEFAULT_RUNS 50
 
 int main(int argc, char const *argv[]) {
     char name[20];
@@ -36,13 +36,14 @@ int main(int argc, char const *argv[]) {
 
         //RUNS THE HILL CLIMBING METHOD
         cost = hill_climbing(head, &sol);
-        printf("COST -> %.3f\n\n", cost );
+        printf("QUALITY -> %.3f\n\n", cost );
 
         if (best_cost < cost)
             best_cost = cost;
     }
 
     printf("[BEST] %.3f\n", best_cost );
+
     //FREES  ALLOCATED MEMORY
     free_mem(head);
     return 0;
