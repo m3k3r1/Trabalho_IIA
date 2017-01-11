@@ -1,7 +1,7 @@
 CC=gcc
 #
 IDIR=include
-CFLAGS=-I$(IDIR) -Wall -g
+CFLAGS=-I$(IDIR) -Wall -g -lm
 
 ODIR=obj
 SRC=src

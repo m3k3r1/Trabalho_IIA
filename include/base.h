@@ -7,6 +7,9 @@
 #include <math.h>
 #include <time.h>
 #include <string.h>
+#include <pthread.h>
+#include <math.h>
+#include <time.h>
 
 typedef struct dist dist_t;
 struct dist{

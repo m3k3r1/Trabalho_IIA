@@ -6,11 +6,12 @@
 
 int main(int argc, char const *argv[]) {
     char name[20];
-    int runs;
-    float cost, best_cost = 0, avg = 0;
+    int runs, n_iter;
+    float cost = 0, best_cost = 0, avg = 0;
     sol_t* sol = NULL;
     sol_t* tmp;
     dist_t* head = NULL;
+    //pthread_t* divide_to_conquer;
     time_t start, end, duration;
     start = time (0);
 
@@ -31,14 +32,22 @@ int main(int argc, char const *argv[]) {
 
     //PUTS THE FILE INFO IN THE LINKED LIST
     read_from(name, &head);
+    n_iter = runs;
+    //divide_to_conquer = malloc(sizeof(pthread_t) * )
 
     for (size_t i = 0; i < runs; i++) {
 
         //CREATES INTIAL SOLUTION RANDOMLY
         init_sol(&sol, head);
 
+        //pthread_create(divide_to_conquer[i], NULL, hill_climbing(head, &sol, &cost), NULL)
+
         //RUNS THE HILL CLIMBING METHOD
-        cost = hill_climbing(head, &sol);
+        //hill_climbing(head, &sol, &cost, n_iter);
+
+        //RUNS THE simulated_annelling
+        simulated_annelling(head, &sol, &cost, n_iter);
+
         avg += cost;
         printf("QUALITY -> %.3f\n\n", cost );
 
