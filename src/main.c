@@ -7,7 +7,8 @@
 int main(int argc, char const *argv[]) {
     char name[20];
     int runs, n_iter;
-    float cost = 0, best_cost = 0, avg = 0;
+    float best_cost = 0, avg = 0;
+    float cost;
     sol_t* sol = NULL;
     sol_t* tmp;
     dist_t* head = NULL;
@@ -33,20 +34,23 @@ int main(int argc, char const *argv[]) {
     //PUTS THE FILE INFO IN THE LINKED LIST
     read_from(name, &head);
     n_iter = runs;
-    //divide_to_conquer = malloc(sizeof(pthread_t) * )
+
+    //divide_to_conquer = malloc(sizeof(pthread_t) * runs);
+    //cost = malloc(sizeof(cost) * runs);
 
     for (size_t i = 0; i < runs; i++) {
 
         //CREATES INTIAL SOLUTION RANDOMLY
         init_sol(&sol, head);
 
+        //TO DO divide work load in threads
         //pthread_create(divide_to_conquer[i], NULL, hill_climbing(head, &sol, &cost), NULL)
 
         //RUNS THE HILL CLIMBING METHOD
-        //hill_climbing(head, &sol, &cost, n_iter);
+        hill_climbing(head, &sol, &cost, n_iter);
 
         //RUNS THE simulated_annelling
-        simulated_annelling(head, &sol, &cost, n_iter);
+        //simulated_annelling(head, &sol, &cost, n_iter);
 
         avg += cost;
         printf("QUALITY -> %.3f\n\n", cost );
@@ -64,9 +68,7 @@ int main(int argc, char const *argv[]) {
         printf(" %d ", tmp->e );
         tmp = tmp->next_elem;
     }
-    //end = clock();
-    //seconds = end - start;
-    //seconds /= CLOCKS_PER_SEC;
+
     end = time (0);
     duration = end - start;
     printf("\n [ELAPSED TIME]  >> %lus\n", duration );

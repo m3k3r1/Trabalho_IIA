@@ -89,89 +89,50 @@ void hill_climbing(dist_t* head, sol_t ** sol, float* f_cost, int n_iter){
 }
 void simulated_annelling(dist_t* head, sol_t ** sol, float* f_cost, int n_iter){
     float cost, new_cost, temp = TMAX;
-    sol_t *new_sol, *tmp;
-    int flag = 1;
+    sol_t *new_sol;
+    int flag = 0;
 
     srand ( time(NULL) );
 
-    n_iter = get_max(head);
-
-    tmp = *sol;
-
-    printf("[INI SOL] -> ");
-    while (tmp) {
-        printf(" %d ", tmp->e );
-        tmp = tmp->next_elem;
-    }
-
-    //CHECKS COST OF INITIAL SOLUTION
     cost = f_diversity(*sol, head);
-    printf(" [QUALITY] -> %.3f\n", cost );
 
     while (temp > TMIN) {
-        for (size_t i = 0; i < n_iter; i++) {
-            //CREATES NEIGHBOUR
+        for (size_t i = 0; i < 5; i++) {
+
             crt_neighbour(head, &new_sol, *sol);
-            //CHECKS COST OF NEW NEIGHBOUR
+            flag++;
+
             new_cost = f_diversity(*sol, head);
-            //COST = QUALITY
-            //+QUALITY = BETTER SOLUTION
-            if (new_cost > cost) {
-                flag++;
+
+            printf("%d\n",accept_worse(cost, new_cost, temp) );
+            int bool_ = accept_worse(cost, new_cost, temp);
+            if (new_cost > cost || bool_) {
                 *sol = new_sol;
                 cost = new_cost;
-
-                tmp = new_sol;
-                printf("[NEW SOL] -> ");
-
-                while (tmp) {
-                    printf(" %d ", tmp->e );
-                    tmp = tmp->next_elem;
-                }
-                printf(" [QUALITY] -> %.3f\n", new_cost );
             }else{
-                if ( accept_worse(cost, new_cost, temp) ) {
-                    flag++;
-                    *sol = new_sol;
-                    cost = new_cost;
-
-                    tmp = new_sol;
-                    printf("[NEW SOL] -> ");
-
-                    while (tmp) {
-                        printf(" %d ", tmp->e );
-                        tmp = tmp->next_elem;
-                    }
-                    printf(" [QUALITY] -> %.3f\n", new_cost );
-                }else{
-                    delete_last(&new_sol);
-                }
+                delete_last(&new_sol);
+                flag--;
             }
-            printf("%d\n", flag );
-            if (flag  == 19 )
-                break;
+            if (flag == 19) {
+                continue;
+            }
 
         }
-
-        temp *= 0.8;
-    }
-
+            temp = temp * 0.89;
+        }
     *f_cost = cost;
 }
 int accept_worse(float cost, float new_cost, int temp){
-    int a = 0;
     int n_rand;
-    float a_tmp;
+    float a = 0;
 
-    n_rand = rand() %2;
+    n_rand = rand() % 2;
 
-    a_tmp = expf( (cost - new_cost) / temp);
+    a = expf( (cost - new_cost) / temp);
 
-    if (a_tmp >= n_rand) {
-        a = 1;
-    }
-
-    return a;
+    if (a >= n_rand && n_rand != 0)
+        return 1;
+    return 0;
 }
 void free_mem_sol(sol_t* head) {
     sol_t* tmp = NULL;
