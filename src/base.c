@@ -1,7 +1,7 @@
 #include "base.h"
 
 int get_max(dist_t* head){
-    int max;
+    int max = 0;
 
     while (head) {
         if (head->e2 > max) {

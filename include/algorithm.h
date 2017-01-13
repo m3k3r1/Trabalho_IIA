@@ -10,6 +10,7 @@ void crt_neighbour();
 void hill_climbing(dist_t* head, sol_t **sol, float* f_cost, int n_iter);
 void simulated_annelling(dist_t* head, sol_t ** sol, float* f_cost, int n_iter);
 int accept_worse(float cost, float new_cost, int temp);
+void gen_mutation(dist_t* head, sol_t ** sol, float* f_cost, int max);
 void free_mem_sol(sol_t* head);
 void delete_last(sol_t** head);
 

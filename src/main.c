@@ -34,12 +34,14 @@ int main(int argc, char const *argv[]) {
     //PUTS THE FILE INFO IN THE LINKED LIST
     read_from(name, &head);
     n_iter = runs;
-
     //divide_to_conquer = malloc(sizeof(pthread_t) * runs);
     //cost = malloc(sizeof(cost) * runs);
 
-    for (size_t i = 0; i < runs; i++) {
+    int max = get_max(head);
 
+    gen_mutation(head, &sol, &cost, max);
+/*
+    for (size_t i = 0; i < runs; i++) {
         //CREATES INTIAL SOLUTION RANDOMLY
         init_sol(&sol, head);
 
@@ -48,10 +50,8 @@ int main(int argc, char const *argv[]) {
 
         //RUNS THE HILL CLIMBING METHOD
         hill_climbing(head, &sol, &cost, n_iter);
-
         //RUNS THE simulated_annelling
         //simulated_annelling(head, &sol, &cost, n_iter);
-
         avg += cost;
         printf("QUALITY -> %.3f\n\n", cost );
 
@@ -75,7 +75,7 @@ int main(int argc, char const *argv[]) {
     printf("==============================================================================================\n" );
 
     //FREES  ALLOCATED MEMORY
-    free_mem_sol(sol);
+    free_mem_sol(sol);*/
     free_mem(head);
     return 0;
 }
