@@ -149,52 +149,58 @@ void delete_last(sol_t** head){
     free(*head);
     *head = NULL;
 }
-void gen_mutation(dist_t* head, sol_t ** sol, float* f_cost, int max){
-    int pop_size  = 0;
-    float quality = 0, sum_quality = 0;
-    sol_t** pop;
-    sol_t** best_pop;
+void gen_mutation(dist_t* head, float* f_cost, int max){
+    int pop_size  = 0 ,indicator = 0;
+    float sum_quality = 0, quality = 0;
+    sol_t** pop = NULL;
+    sol_t** best_pop = NULL;
 
     //ASK POPULTAIONS SIZE
     do {
         printf("Population >  " );
         scanf("%d", &pop_size );
-    } while(pop_size > max);
+    } while(pop_size >= max);
     //ALLOCATES MEMORY TO HOLD THE POPULATION
-    pop = malloc(sizeof(pop) * (max-1));
+    if(!(pop = malloc(sizeof(pop) * max - 1))){
+        perror("[MEMORY ERROR] Can't alocate memory");
+        return;
+    }
     //CREATES RANDOMLY THE  POPULATION
     for (size_t i = 0; i < pop_size; i++){
-        init_sol(&pop[i], head);
-        for (size_t o = 0; o < max - 3; o++)
+        pop[i] = NULL;
+        for (size_t o = 0; o < 6; o++)
             crt_neighbour(head, &pop[i], pop[i]);
         sum_quality += f_diversity(pop[i], head);
-    }
-    //ALLOCATES MEMORY FOR HALF POPULATION BEST SOLUTIONS
-    best_pop =  malloc(sizeof(best_pop) * pop_size/2);
-    //SAVES PARENTS
-    for (size_t i = 0; i < pop_size/2; i++) {
-        for (size_t x = 0; x < pop_size; x++) {
-            if( f_diversity(pop[i], head) > sum_quality)
-                best_pop[i] = pop[i];
         }
+
+    //ALLOCATES THE MEMORY FOR PARENTS
+    if(!(best_pop = malloc(sizeof(best_pop) * pop_size/2))){
+        perror("[MEMORY ERROR] Can't alocate memory");
+        return;
     }
 
-    for (size_t i = 0; i < pop_size; i++) {
-        printf("%.3f --> ", f_diversity(pop[i], head));
-        while (pop[i]) {
-            printf(" %d ", pop[i]->e );
-            pop[i] = pop[i]->next_elem;
-        }
-        printf("\n" );
+    for (size_t i = 0; i < pop_size/2; i++) {
+        best_pop[i] = pop[i];
     }
 
-    printf("\n" );
-    for (size_t i = 0; i < pop_size/2; i++) {
-        while (best_pop[i]) {
-            printf(" %d ", best_pop[i]->e );
-            best_pop[i] = best_pop[i]->next_elem;
+        for (size_t i = 0; i < pop_size; i++) {
+            printf("%.3f --  ", f_diversity(pop[i], head) );
+            while (pop[i]) {
+                printf(" %d ", pop[i]->e );
+                pop[i] = pop[i]->next_elem;
+            }
+            printf("\n" );
         }
-        printf("\n" );
-    }
+
+        printf("\n Parents \n" );
+        for (size_t i = 0; i < pop_size / 2; i++) {
+            while (best_pop[i]) {
+                printf(" %d ", best_pop[i]->e );
+                best_pop[i] = best_pop[i]->next_elem;
+            }
+            printf("\n" );
+        }
+
+
 
 }

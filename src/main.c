@@ -39,7 +39,6 @@ int main(int argc, char const *argv[]) {
 
     int max = get_max(head);
 
-    gen_mutation(head, &sol, &cost, max);
 /*
     for (size_t i = 0; i < runs; i++) {
         //CREATES INTIAL SOLUTION RANDOMLY
@@ -74,8 +73,11 @@ int main(int argc, char const *argv[]) {
     printf("\n [ELAPSED TIME]  >> %lus\n", duration );
     printf("==============================================================================================\n" );
 
+  */
+    gen_mutation(head, &cost, max);
+
     //FREES  ALLOCATED MEMORY
-    free_mem_sol(sol);*/
+    //free_mem_sol(sol);
     free_mem(head);
     return 0;
 }
